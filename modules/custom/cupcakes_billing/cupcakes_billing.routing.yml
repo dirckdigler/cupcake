@@ -1,8 +1,9 @@
 cupcakes_billing.invoice:
-  path: '/invoice'
+  path: '/reports'
   defaults:
-    _controller: '\Drupal\cupcakes_billing\Controller\CupcakesBillingController::invoice'
+    _controller: '\Drupal\cupcakes_billing\Controller\CupcakesBillingController::reports'
     total: ''
-    _title: 'Purchase billing'
+    _title: 'Report section'
   requirements:
-    _permission: 'access content'
+    _role: 'storemanager'
+

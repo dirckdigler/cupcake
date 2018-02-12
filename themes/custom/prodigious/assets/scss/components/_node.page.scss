@@ -100,3 +100,32 @@
     }
   }
 }
+
+.path--reports {
+  p {
+    font-size: 1.5em;
+  }
+  .block__title {
+    display:  none;
+  }
+  .reports-section p {
+    background: #6FBEF1;
+    width: 100%;
+    border: none;
+    line-height: 60px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    @media (min-width: $screen-lg-min) {
+      width: 50%;
+    }
+      a {
+      display: block;
+      color: #fff;
+    }
+  }
+}
+

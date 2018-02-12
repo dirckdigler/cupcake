@@ -8930,4 +8930,28 @@ footer {
     display: block;
     color: #fff; }
 
+.path--reports p {
+  font-size: 1.5em; }
+
+.path--reports .block__title {
+  display: none; }
+
+.path--reports .reports-section p {
+  background: #6FBEF1;
+  width: 100%;
+  border: none;
+  line-height: 60px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 0 auto;
+  margin-top: 40px;
+  margin-bottom: 40px; }
+  @media (min-width: 1200px) {
+    .path--reports .reports-section p {
+      width: 50%; } }
+  .path--reports .reports-section p a {
+    display: block;
+    color: #fff; }
+
 /*# sourceMappingURL=prodigious.style.css.map */

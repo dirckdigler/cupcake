@@ -47,6 +47,9 @@ function cupcake_sales_validate_form(array &$form, FormStateInterface $form_stat
   }
 }
 
+/**
+ * Custom process before submit.
+ */
 function cupcake_sales_submit($form, FormStateInterface $form_state) {
   $current_path = \Drupal::service('path.current')->getPath();
   $nid = substr(strrchr($current_path, '/'), 1);
@@ -67,7 +70,7 @@ function cupcake_sales_submit($form, FormStateInterface $form_state) {
   ]);
 
   $newCompanyNode->save();
-  drupal_set_message('Your company has been registered.', 'status');
+  drupal_set_message('This is your invoice.', 'status');
   $url = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $newCompanyNode->id()]);
   return $form_state->setRedirectUrl($url);
 }
@@ -80,8 +83,9 @@ function cupcakes_billing_theme($existing, $type, $theme, $path) {
     'cupcake_invoice' => [
       'template' => 'cupcake_invoice',
       'variables' => [
-        'mama'  => NULL,
-        'papa'  => NULL,
+        'report'  => NULL,
+        'ranking'  => NULL,
+        'monthly'  => NULL,
       ],
     ],
   ];

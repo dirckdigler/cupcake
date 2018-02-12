@@ -15,10 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CupcakesBillingController extends ControllerBase {
 
-  public function invoice() {
+  public function reports() {
 
     return array(
-      '#markup' => '<p>' . $this->t('Hello, Forcontu! This is my first module in Drupal 8!') . '</p>',
+      '#markup' => '<p>' . $this->t('') . '</p>',
     );
   }
 }

@@ -1,0 +1,8 @@
+name: Cupcakes billing
+type: module
+description: 'Cupcakes billing details'
+package: Prodigious
+core: 8.x
+dependencies:
+  - telephone
+

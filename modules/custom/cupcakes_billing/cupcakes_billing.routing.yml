@@ -1,0 +1,8 @@
+cupcakes_billing.invoice:
+  path: '/invoice'
+  defaults:
+    _controller: '\Drupal\cupcakes_billing\Controller\CupcakesBillingController::invoice'
+    total: ''
+    _title: 'Purchase billing'
+  requirements:
+    _permission: 'access content'

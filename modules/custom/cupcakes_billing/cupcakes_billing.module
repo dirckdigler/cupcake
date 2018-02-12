@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * @file
+ * Module file for separata_forms.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_form_alter().
+ */
+function cupcakes_billing_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  switch ($form_id) {
+    case 'contact_message_sales_form_form':
+      $config = \Drupal::config('cupcakes_billing.settings')->get('field_sale_name');
+      $form['#validate'][] = 'cupcake_sales_validate_form';
+      foreach (array_keys($form['actions']) as $action) {
+        if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+          $form['actions']['submit']['#submit'][] = 'cupcake_sales_submit';
+        }
+      }
+      break;
+  }
+}
+
+/**
+ * Custom validate field telephone.
+ */
+function cupcake_sales_validate_form(array &$form, FormStateInterface $form_state) {
+  $min = 7;
+  $max = 12;
+  $tel = $form_state->getValue('field_sale_telephone')[0]['value'];
+
+  if ($tel) {
+    if (!filter_var($tel, FILTER_VALIDATE_INT)) {
+      $form_state->setErrorByName('telephone', t('Please, write a valid number.'));
+    }
+    if (strlen($tel) < $min) {
+      $form_state->setErrorByName('telephone', t('Please, do not write less than 7 digits.'));
+    }
+    elseif (strlen($tel) > $max) {
+      $form_state->setErrorByName('telephone', t('Please, do not write more than 12 digits.'));
+    }
+  }
+}
+
+function cupcake_sales_submit($form, FormStateInterface $form_state) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $nid = substr(strrchr($current_path, '/'), 1);
+  $node = Node::load($nid);
+  $price = $node->field_price_->getString();
+  $qty = $form_state->getValue('field_sale_qty')[0]['value'];
+  $total = ($price * $qty);
+
+  $newCompanyNode = Node::create([
+    'type'                   => 'invoice',
+    'title'                  => $form_state->getValue('field_sale_email')[0]['value'],
+    'field_name_invoice'     => $form_state->getValue('field_sale_name')[0]['value'],
+    'field_lastname_invoice' => $form_state->getValue('field_sale_lastname')[0]['value'],
+    'field_product_invoice'  => $node->getTitle(),
+    'field_qty_invoice'      => $qty,
+    'field_price_invoice'    => $price,
+    'field_total_invoice'    => $total,
+  ]);
+
+  $newCompanyNode->save();
+  drupal_set_message('Your company has been registered.', 'status');
+  $url = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $newCompanyNode->id()]);
+  return $form_state->setRedirectUrl($url);
+}
+
+/**
+ * Implements hook_theme().
+ */
+function cupcakes_billing_theme($existing, $type, $theme, $path) {
+  return [
+    'cupcake_invoice' => [
+      'template' => 'cupcake_invoice',
+      'variables' => [
+        'mama'  => NULL,
+        'papa'  => NULL,
+      ],
+    ],
+  ];
+}

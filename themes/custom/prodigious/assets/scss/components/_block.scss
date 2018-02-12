@@ -1,0 +1,30 @@
+// Styles for blocks.
+// -----------------------------------------------------------------------------
+
+//Our products front page
+
+.our-products {
+  .view__content {
+    @media (min-width: $screen-lg-min) {
+      width: 100%;
+    }
+    .view__row {
+      @media (min-width: $screen-lg-min) {
+        width: 25%;
+        float: left;
+        padding-right: 20px;
+      }
+    }
+  }
+  img {
+    width: 100%;
+  }
+  .views-field-name a {
+    color: #633B1E;
+    padding: 20px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+  }
+}
+
